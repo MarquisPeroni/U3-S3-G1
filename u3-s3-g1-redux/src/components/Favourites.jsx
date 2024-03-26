@@ -3,10 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
+import { deleteJob } from "../redux/actions"; 
 
 const Favourites = () => {
   const favJob = useSelector((state) => {
-    return state.favState.content;
+    return state.favourites.content;
   });
   const dispatch = useDispatch();
 
@@ -21,22 +22,25 @@ const Favourites = () => {
       <Row>
         <Col>
           <ListGroup>
-            {favJob.map((state, i) => (
-              <ListGroup.Item className="d-flex justify-content-between" key={i}>
-                <Link to={`/${state.company_name}`}>{state.company_name}</Link>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    dispatch({
-                      type: "DELETE_JOBS",
-                      payload: i,
-                    });
-                  }}
+            {favJob &&
+              favJob.map((state, i) => (
+                <ListGroup.Item
+                  className="d-flex justify-content-between"
+                  key={i}
                 >
-                  <FaTrash />
-                </Button>
-              </ListGroup.Item>
-            ))}
+                  <Link to={`/${state.company_name}`}>
+                    {state.company_name}
+                  </Link>
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      dispatch(deleteJob(i));
+                    }}
+                  >
+                    <FaTrash />
+                  </Button>
+                </ListGroup.Item>
+              ))}
           </ListGroup>
         </Col>
       </Row>

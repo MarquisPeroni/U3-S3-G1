@@ -1,9 +1,16 @@
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { addFavourite } from "../redux/actions";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
+
+  const handleAddFavourite = () => {
+    console.log("Pulsante cliccato");
+    dispatch(addFavourite(data));
+  };
+
   return (
     <Row className="mx-0 mt-3 p-3" style={{ border: "1px solid #00000033", borderRadius: 4 }}>
       <Col xs={2}>
@@ -16,12 +23,7 @@ const Job = ({ data }) => {
       </Col>{" "}
       <Button
         className="bg-secondary w-25 col-6"
-        onClick={() => {
-          dispatch({
-            type: "ADD_FAVOURITES",
-            payload: data,
-          });
-        }}
+        onClick={handleAddFavourite}
       >
         ADD FAVOURITES
       </Button>
